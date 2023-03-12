@@ -8,3 +8,6 @@ class AddPivotTableBrandProducts < ActiveRecord::Migration[5.2]
     add_index :brand_products, [:product_id, :brand_id]
   end
 end
+
+# t.references :product, null: false, index: true, foreign_key: true, type: :uuid
+# t.references :brand, null: false, index: true, foreign_key: true, type: :uuid
