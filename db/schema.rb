@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_12_031911) do
+ActiveRecord::Schema.define(version: 2023_03_12_232741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -46,7 +46,17 @@ ActiveRecord::Schema.define(version: 2023_03_12_031911) do
   create_table "brands", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.text "brief"
+    t.string "slug", null: false
     t.string "web_address"
+    t.boolean "active", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.string "slug", null: false
     t.boolean "active", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -55,10 +65,17 @@ ActiveRecord::Schema.define(version: 2023_03_12_031911) do
   create_table "products", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "price"
+    t.string "slug", null: false
     t.text "description"
     t.string "brief"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "products_categories", id: false, force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "category_id"
+    t.index ["product_id", "category_id"], name: "index_products_categories_on_product_id_and_category_id"
   end
 
   create_table "reviews", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -85,6 +102,8 @@ ActiveRecord::Schema.define(version: 2023_03_12_031911) do
   end
 
   create_table "variant_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "reference_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
