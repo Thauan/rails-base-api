@@ -1,3 +1,2 @@
-class Api::V1::ProductsController < ApplicationController
-  before_action :authenticate_user!
+class Api::V1::ProductsController < BaseController
 end

@@ -1,19 +1,5 @@
 # frozen_string_literal: true
 
-config.jwt do |jwt|
-  jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
-  
-  jwt.dispatch_requests = [
-    ['POST', %r{^/sign_in$}]
-  ]
-
-  jwt.revocation_requests = [
-    ['DELETE', %r{^/sign_out$}]
-  ]
-  
-  jwt.expiration_time = 15.day.to_i
-end
-
 # Assuming you have not yet modified this file, each configuration option below
 # is set to its default value. Note that some are commented out while others
 # are not: uncommented lines are intended to protect your configuration from
@@ -33,6 +19,20 @@ Devise.setup do |config|
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
   # config.parent_controller = 'DeviseController'
+
+  config.jwt do |jwt|
+    jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
+    
+    jwt.dispatch_requests = [
+      ['POST', %r{^/sign_in$}]
+    ]
+  
+    jwt.revocation_requests = [
+      ['DELETE', %r{^/sign_out$}]
+    ]
+    
+    jwt.expiration_time = 15.day.to_i
+  end
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -278,7 +278,8 @@ Devise.setup do |config|
   #
   # The "*/*" below is required to match Internet Explorer requests.
   # config.navigational_formats = ['*/*', :html, :turbo_stream]
-
+  config.navigational_formats = []
+  
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
 

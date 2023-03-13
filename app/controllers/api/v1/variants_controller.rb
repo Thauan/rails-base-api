@@ -1,3 +1,2 @@
-class Api::V1::VariantsController < ApplicationController
-  before_action :authenticate_user!
+class Api::V1::VariantsController < BaseController
 end
