@@ -42,6 +42,16 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get -yqq install libpq-dev
           bundle install --jobs 4 --retry 3
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Set up ChromeDriver
+        run: |
+          mkdir chromedriver
+          curl -SL https://chromedriver.storage.googleapis.com/$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip > chromedriver.zip
+          unzip chromedriver.zip -d chromedriver
+          echo "export PATH=\${PATH}:$(pwd)/chromedriver" >> $GITHUB_ENV
       - name: Run Tests
         env:
           RAILS_ENV: test
